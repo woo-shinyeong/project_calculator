@@ -9,6 +9,7 @@ public class BaseCalculator
     public virtual decimal Add(decimal a, decimal b) => a + b;
     public virtual decimal Subtract(decimal a, decimal b) => a - b;
     public virtual decimal Multiply(decimal a, decimal b) => a * b;
+
     public virtual decimal Divide(decimal a, decimal b)
     {
         if (b == 0) throw new DivideByZeroException();
@@ -21,7 +22,6 @@ public class BaseCalculator
     }
 }
 
-
 // AdvancedCalculator 
 public class AdvancedCalculator : BaseCalculator
 {
@@ -32,7 +32,6 @@ public class AdvancedCalculator : BaseCalculator
         Value = initialValue;
     }
 
-    //BaseCalculator override
     public override decimal Calculate(IReadOnlyList<string> postfix)
     {
         var stack = new Stack<decimal>();
@@ -77,7 +76,7 @@ public class AdvancedCalculator : BaseCalculator
         => new AdvancedCalculator(a.Divide(a.Value, b.Value));
 }
 
-
+// MainCalculator
 public class MainCalculator : AdvancedCalculator
 {
     private readonly Dictionary<string, int> precedence = new()
@@ -91,7 +90,7 @@ public class MainCalculator : AdvancedCalculator
     public List<string> Tokenize(string expr)
     {
         var tokens = new List<string>();
-        string number = "";
+        var number = "";
 
         for (int i = 0; i < expr.Length; i++)
         {
@@ -102,6 +101,7 @@ public class MainCalculator : AdvancedCalculator
                 number += c;
                 continue;
             }
+
             if (!string.IsNullOrEmpty(number))
             {
                 tokens.Add(number);
@@ -117,7 +117,6 @@ public class MainCalculator : AdvancedCalculator
         if (!string.IsNullOrEmpty(number)) tokens.Add(number);
         return tokens;
     }
-
 
     // 후위표기 변환
     public List<string> ConvertToPostfix(List<string> tokens)
@@ -158,6 +157,6 @@ public class MainCalculator : AdvancedCalculator
     {
         var tokens = Tokenize(expression);
         var postfix = ConvertToPostfix(tokens);
-        return Calculate(postfix); 
+        return Calculate(postfix);
     }
 }

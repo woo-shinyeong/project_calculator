@@ -32,7 +32,7 @@
 
         <!-- Display 영역 -->
         <StackPanel Grid.Row="0" Margin="5">
-            <TextBox FontSize="24" Height="100" IsReadOnly="True" TextAlignment="Right"
+            <TextBox FontSize="18" Height="100" IsReadOnly="True" TextAlignment="Right"
                      Text="{Binding CurrentExpression, Mode=OneWay}" BorderThickness="0"/>
             <TextBox FontSize="24" Height="50" IsReadOnly="True" TextAlignment="Right"
                      Text="{Binding CurrentResult, Mode=OneWay}" BorderThickness="0"/>
@@ -93,4 +93,3 @@
         </Grid>
     </Grid>
 </Page>
-

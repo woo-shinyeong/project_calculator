@@ -6,8 +6,8 @@ public class CalculatorViewModel : INotifyPropertyChanged
 {
     private readonly MainCalculator calculator = new MainCalculator();
 
-    private string currentExpression = "";
-    private string currentResult = "";
+    private string currentExpression = string.Empty;
+    private string currentResult = string.Empty;
 
     public string CurrentExpression
     {
@@ -38,7 +38,7 @@ public class CalculatorViewModel : INotifyPropertyChanged
     {
         AppendInputCommand = new RelayCommand(param =>
         {
-            if (param != null)
+            if (param is not null)
             {
                 CurrentExpression += param.ToString();
             }
