@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-      xmlns:local="clr-namespace:project_calculator.View"
       mc:Ignorable="d" 
       d:DesignHeight="500" d:DesignWidth="300"
       Title="MainWindow" Background="White">
@@ -25,28 +24,22 @@
         </Style>
     </Page.Resources>
 
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" MinHeight="120"/>
-            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0" Grid.RowSpan="2">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
-            </Grid.RowDefinitions>
+        <!-- Display 영역 -->
+        <StackPanel Grid.Row="0" Margin="5">
+            <TextBox FontSize="24" Height="100" IsReadOnly="True" TextAlignment="Right"
+                     Text="{Binding CurrentExpression, Mode=OneWay}" BorderThickness="0"/>
+            <TextBox FontSize="24" Height="50" IsReadOnly="True" TextAlignment="Right"
+                     Text="{Binding CurrentResult, Mode=OneWay}" BorderThickness="0"/>
+        </StackPanel>
 
-            <TextBox x:Name="FormulaDisplay" Grid.Row="0" FontSize="18" Height="100" IsReadOnly="True" TextAlignment="Right" Text="" BorderThickness="0" Margin="5,40,5,0"/>
-            <TextBox x:Name="ResultDisplay" Grid.Row="1" FontSize="24"  Height="50" IsReadOnly="True" TextAlignment="Right" Text="" BorderThickness="0" Margin="5,5,5,5"/>
-
-            <Button Content="" Width="30" Height="30"
-            HorizontalAlignment="Right" VerticalAlignment="Top" Background="RoyalBlue" Margin="3"/>
-        </Grid>
-
-        <Grid Grid.Row="2">
+        <!-- 버튼 영역 -->
+        <Grid Grid.Row="1" Margin="3">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -62,35 +55,42 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <Button Content="(" CommandParameter="(" Grid.Row="0" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="3,3,1.5,1.5"/>
-            <Button Content=")" CommandParameter=")" Grid.Row="0" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 3, 1.5, 1.5"/>
-            <Button Content="C" Grid.Row="0" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 3, 1.5, 1.5"/>
-            <Button Content="CE" Grid.Row="0" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 3, 3, 1.5"/>
+            <!-- Row 0: 괄호 및 초기화 -->
+            <Button Content="(" Command="{Binding AppendInputCommand}" CommandParameter="(" Grid.Row="0" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content=")" Command="{Binding AppendInputCommand}" CommandParameter=")" Grid.Row="0" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="C" Command="{Binding ClearAllCommand}" Grid.Row="0" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="CE" Command="{Binding ClearEntryCommand}" Grid.Row="0" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
 
-            <Button Content="1/x" Grid.Row="1" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="3, 1.5, 1.5, 1.5"/>
-            <Button Content="x²" Grid.Row="1" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 1.5, 1.5, 1.5"/>
-            <Button Content="√x" Grid.Row="1" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5,1.5,1.5,1.5"/>
-            <Button Content="+" CommandParameter="+" Grid.Row="1" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 1.5, 3, 1.5"/>
+            <!-- Row 1: 고급 연산 -->
+            <Button Content="1/x" Grid.Row="1" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="x²" Grid.Row="1" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="√x" Grid.Row="1" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="+" Command="{Binding AppendInputCommand}" CommandParameter="+" Grid.Row="1" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
 
-            <Button Content="7" CommandParameter="7" Grid.Row="2" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="3, 1.5, 1.5, 1.5" Background="White"/>
-            <Button Content="8" CommandParameter="8" Grid.Row="2" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 1.5, 1.5, 1.5" Background="White"/>
-            <Button Content="9" CommandParameter="9" Grid.Row="2" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 1.5, 1.5, 1.5" Background="White"/>
-            <Button Content="-" CommandParameter="-" Grid.Row="2" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 1.5, 3, 1.5"/>
+            <!-- Row 2 -->
+            <Button Content="7" Command="{Binding AppendInputCommand}" CommandParameter="7" Grid.Row="2" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="8" Command="{Binding AppendInputCommand}" CommandParameter="8" Grid.Row="2" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="9" Command="{Binding AppendInputCommand}" CommandParameter="9" Grid.Row="2" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="-" Command="{Binding AppendInputCommand}" CommandParameter="-" Grid.Row="2" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
 
-            <Button Content="4" CommandParameter="4" Grid.Row="3" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="3, 1.5, 1.5, 1.5" Background="White"/>
-            <Button Content="5" CommandParameter="5" Grid.Row="3" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 1.5, 1.5, 1.5" Background="White"/>
-            <Button Content="6" CommandParameter="6" Grid.Row="3" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 1.5, 1.5, 1.5" Background="White"/>
-            <Button Content="x" CommandParameter="*" Grid.Row="3" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 1.5, 3, 1.5"/>
+            <!-- Row 3 -->
+            <Button Content="4" Command="{Binding AppendInputCommand}" CommandParameter="4" Grid.Row="3" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="5" Command="{Binding AppendInputCommand}" CommandParameter="5" Grid.Row="3" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="6" Command="{Binding AppendInputCommand}" CommandParameter="6" Grid.Row="3" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="x" Command="{Binding AppendInputCommand}" CommandParameter="*" Grid.Row="3" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
 
-            <Button Content="1" CommandParameter="1" Grid.Row="4" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="3, 1.5, 1.5, 1.5" Background="White"/>
-            <Button Content="2" CommandParameter="2" Grid.Row="4" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 1.5, 1.5, 1.5" Background="White"/>
-            <Button Content="3" CommandParameter="3" Grid.Row="4" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 1.5, 1.5, 1.5" Background="White"/>
-            <Button Content="÷" CommandParameter="/" Grid.Row="4" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 1.5, 3, 1.5"/>
+            <!-- Row 4 -->
+            <Button Content="1" Command="{Binding AppendInputCommand}" CommandParameter="1" Grid.Row="4" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="2" Command="{Binding AppendInputCommand}" CommandParameter="2" Grid.Row="4" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="3" Command="{Binding AppendInputCommand}" CommandParameter="3" Grid.Row="4" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="÷" Command="{Binding AppendInputCommand}" CommandParameter="/" Grid.Row="4" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
 
-            <Button Content="+/-" Grid.Row="5" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="3, 1.5, 1.5, 3" Background="White"/>
-            <Button Content="0" CommandParameter="0" Grid.Row="5" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 1.5, 1.5, 3" Background="White"/>
-            <Button Content="." Grid.Row="5" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 1.5, 1.5, 3" Background="White"/>
-            <Button Content="=" CommandParameter="=" Grid.Row="5" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5, 1.5, 3, 3" Background="RoyalBlue"/>
+            <!-- Row 5 -->
+            <Button Content="+/-" Grid.Row="5" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="0" Command="{Binding AppendInputCommand}" CommandParameter="0" Grid.Row="5" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="." Command="{Binding AppendInputCommand}" CommandParameter="." Grid.Row="5" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="=" Command="{Binding CalculateCommand}" Grid.Row="5" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="RoyalBlue"/>
         </Grid>
     </Grid>
-    </Page>
+</Page>
+
