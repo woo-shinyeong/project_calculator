@@ -68,27 +68,27 @@
             <Button Content="+" Command="{Binding AppendInputCommand}" CommandParameter="+" Grid.Row="1" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
 
             <!-- Row 2 -->
-            <Button Content="7" Command="{Binding AppendInputCommand}" CommandParameter="7" Grid.Row="2" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
-            <Button Content="8" Command="{Binding AppendInputCommand}" CommandParameter="8" Grid.Row="2" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
-            <Button Content="9" Command="{Binding AppendInputCommand}" CommandParameter="9" Grid.Row="2" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="7" Command="{Binding AppendInputCommand}" CommandParameter="7" Grid.Row="2" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
+            <Button Content="8" Command="{Binding AppendInputCommand}" CommandParameter="8" Grid.Row="2" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
+            <Button Content="9" Command="{Binding AppendInputCommand}" CommandParameter="9" Grid.Row="2" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
             <Button Content="-" Command="{Binding AppendInputCommand}" CommandParameter="-" Grid.Row="2" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
 
             <!-- Row 3 -->
-            <Button Content="4" Command="{Binding AppendInputCommand}" CommandParameter="4" Grid.Row="3" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
-            <Button Content="5" Command="{Binding AppendInputCommand}" CommandParameter="5" Grid.Row="3" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
-            <Button Content="6" Command="{Binding AppendInputCommand}" CommandParameter="6" Grid.Row="3" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="4" Command="{Binding AppendInputCommand}" CommandParameter="4" Grid.Row="3" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
+            <Button Content="5" Command="{Binding AppendInputCommand}" CommandParameter="5" Grid.Row="3" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
+            <Button Content="6" Command="{Binding AppendInputCommand}" CommandParameter="6" Grid.Row="3" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
             <Button Content="x" Command="{Binding AppendInputCommand}" CommandParameter="*" Grid.Row="3" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
 
             <!-- Row 4 -->
-            <Button Content="1" Command="{Binding AppendInputCommand}" CommandParameter="1" Grid.Row="4" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
-            <Button Content="2" Command="{Binding AppendInputCommand}" CommandParameter="2" Grid.Row="4" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
-            <Button Content="3" Command="{Binding AppendInputCommand}" CommandParameter="3" Grid.Row="4" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="1" Command="{Binding AppendInputCommand}" CommandParameter="1" Grid.Row="4" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
+            <Button Content="2" Command="{Binding AppendInputCommand}" CommandParameter="2" Grid.Row="4" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
+            <Button Content="3" Command="{Binding AppendInputCommand}" CommandParameter="3" Grid.Row="4" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
             <Button Content="÷" Command="{Binding AppendInputCommand}" CommandParameter="/" Grid.Row="4" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
 
             <!-- Row 5 -->
-            <Button Content="+/-" Grid.Row="5" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
-            <Button Content="0" Command="{Binding AppendInputCommand}" CommandParameter="0" Grid.Row="5" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
-            <Button Content="." Command="{Binding AppendInputCommand}" CommandParameter="." Grid.Row="5" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="+/-" Grid.Row="5" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
+            <Button Content="0" Command="{Binding AppendInputCommand}" CommandParameter="0" Grid.Row="5" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
+            <Button Content="." Command="{Binding AppendInputCommand}" CommandParameter="." Grid.Row="5" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
             <Button Content="=" Command="{Binding CalculateCommand}" Grid.Row="5" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="RoyalBlue"/>
         </Grid>
     </Grid>
