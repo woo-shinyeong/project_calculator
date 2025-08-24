@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Linq;
 using System.Windows.Input;
 
 public class CalculatorViewModel : INotifyPropertyChanged
@@ -36,37 +37,37 @@ public class CalculatorViewModel : INotifyPropertyChanged
 
     public CalculatorViewModel()
     {
-        AppendInputCommand = new RelayCommand(param =>
-        {
-            if (param is not null)
-            {
-                CurrentExpression += param.ToString();
-            }
-        });
+        AppendInputCommand = new RelayCommand(AppendInput);
+        CalculateCommand = new RelayCommand(_ => Calculate());
+        ClearAllCommand = new RelayCommand(_ => ClearAll());
+        ClearEntryCommand = new RelayCommand(_ => ClearEntry());
+    }
 
-        CalculateCommand = new RelayCommand(_ =>
+    private void AppendInput(object? param)
+    {
+        if (param is not null)
         {
-            CurrentResult = EvaluateExpressionSafely(CurrentExpression);
-        });
+            CurrentExpression += param.ToString();
+        }
+    }
 
-        ClearAllCommand = new RelayCommand(_ =>
-        {
-            CurrentExpression = string.Empty;
-            CurrentResult = string.Empty;
-        });
+    private void Calculate()
+    {
+        CurrentResult = EvaluateExpressionSafely(CurrentExpression);
+    }
 
-        ClearEntryCommand = new RelayCommand(_ =>
+    private void ClearAll()
+    {
+        CurrentExpression = string.Empty;
+        CurrentResult = string.Empty;
+    }
+
+    private void ClearEntry()
+    {
+        if (!string.IsNullOrEmpty(CurrentExpression))
         {
-            if (!string.IsNullOrEmpty(CurrentExpression))
-            {
-                var tokens = calculator.Tokenize(CurrentExpression);
-                if (tokens.Any())
-                {
-                    tokens.RemoveAt(tokens.Count - 1); // 마지막 토큰 제거
-                    CurrentExpression = string.Join("", tokens);
-                }
-            }
-        });
+            CurrentExpression = calculator.RemoveLastToken(CurrentExpression);
+        }
     }
 
     public event PropertyChangedEventHandler PropertyChanged;
