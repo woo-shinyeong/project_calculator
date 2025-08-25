@@ -126,7 +126,7 @@
             <!-- 6행 -->
             <Button Content="0" Command="{Binding AppendInputCommand}" CommandParameter="0" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
             <Button Content="." Command="{Binding AppendInputCommand}" CommandParameter="." Grid.Row="5" Grid.Column="2"  Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
-            <Button Content="=" Command="{Binding AppendAndCalculateCommand}" CommandParameter="=" Grid.Row="5" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="#B8D0FA"/>
+            <Button Content="=" Command="{Binding CalculateCommand}" CommandParameter="=" Grid.Row="5" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="#B8D0FA"/>
         </Grid>
 
     </Grid>

@@ -47,7 +47,6 @@ public class CalculatorViewModel : INotifyPropertyChanged
     public Visibility HistoryVisibility => IsHistoryVisible ? Visibility.Visible : Visibility.Collapsed;
 
     public ICommand AppendInputCommand { get; }
-    public ICommand AppendAndCalculateCommand { get; }
     public ICommand CalculateCommand { get; }
     public ICommand ClearAllCommand { get; }
     public ICommand ClearEntryCommand { get; }
@@ -56,7 +55,6 @@ public class CalculatorViewModel : INotifyPropertyChanged
     public CalculatorViewModel()
     {
         AppendInputCommand = new RelayCommand(AppendInput);
-        AppendAndCalculateCommand = new RelayCommand(AppendAndCalculate);
         CalculateCommand = new RelayCommand(_ => Calculate());
         ClearAllCommand = new RelayCommand(_ => ClearAll());
         ClearEntryCommand = new RelayCommand(_ => ClearEntry());
@@ -71,17 +69,16 @@ public class CalculatorViewModel : INotifyPropertyChanged
         }
     }
 
-    private void AppendAndCalculate(object? param)
-    {
-        if (param is not null)
-        {
-            CurrentExpression += param.ToString(); 
-        }
-        Calculate(); 
-    }
-
     private void Calculate()
     {
+        CurrentExpression += "=";
+
+        if (CurrentExpression.Count(c => c == '=') > 1)
+        {
+            CurrentResult = "Error";
+            return;
+        }
+
         CurrentResult = EvaluateExpressionSafely(CurrentExpression);
     }
 
