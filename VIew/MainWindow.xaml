@@ -100,9 +100,9 @@
             <Button Content="CE" Command="{Binding ClearEntryCommand}" Grid.Row="0" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
 
             <!-- 2행 -->
-            <Button Content="1/x" Grid.Row="1" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
-            <Button Content="x²" Grid.Row="1" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
-            <Button Content="√x" Grid.Row="1" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="1/x" Command="{Binding AppendInputCommand}" CommandParameter="inv(" Grid.Row="1" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="x²" Command="{Binding AppendInputCommand}" CommandParameter="^2" Grid.Row="1" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
+            <Button Content="√x" Command="{Binding AppendInputCommand}" CommandParameter="sqrt(" Grid.Row="1" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
             <Button Content="+" Command="{Binding AppendInputCommand}" CommandParameter="+" Grid.Row="1" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
 
             <!-- 3행 -->

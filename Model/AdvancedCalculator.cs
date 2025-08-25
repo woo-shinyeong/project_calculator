@@ -23,6 +23,23 @@ public class AdvancedCalculator : BaseCalculator
                 continue;
             }
 
+            // 단항 연산자 처리
+            if (token == "inv" || token == "^2" || token == "sqrt")
+            {
+                if (stack.Count < 1) throw new InvalidOperationException("잘못된 식입니다.");
+
+                decimal c = stack.Pop();
+                stack.Push(token switch
+                {
+                    "inv" => 1 / c,
+                    "^2" => c * c,
+                    "sqrt" => (decimal)Math.Sqrt((double)c),
+                    _ => throw new InvalidOperationException($"지원하지 않는 연산자: {token}")
+                });
+                continue;
+            }
+
+
             if (stack.Count < 2) throw new InvalidOperationException("잘못된 식입니다.");
 
             decimal b = stack.Pop();
@@ -34,6 +51,9 @@ public class AdvancedCalculator : BaseCalculator
                 "-" => Subtract(a, b),
                 "*" => Multiply(a, b),
                 "/" => Divide(a, b),
+                "inv" => 1 / b,
+                "^2" => b * b,
+                "sqrt" => (decimal)Math.Sqrt((double)b),
                 _ => throw new InvalidOperationException($"지원하지 않는 연산자: {token}")
             });
         }

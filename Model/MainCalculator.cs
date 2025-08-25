@@ -7,7 +7,7 @@ public class MainCalculator : AdvancedCalculator
 {
     private readonly Dictionary<string, int> precedence = new()
     {
-        { "+", 1 }, { "-", 1 }, { "*", 2 }, { "/", 2 }
+        { "+", 1 }, { "-", 1 }, { "*", 2 }, { "/", 2 },  { "inv", 3 }, { "^2", 3 }, { "sqrt", 3 }
     };
 
     public MainCalculator(decimal initialValue = 0) : base(initialValue) { }
@@ -17,6 +17,13 @@ public class MainCalculator : AdvancedCalculator
     {
         var tokens = new List<string>();
         var number = "";
+
+        var functions = new Dictionary<string, string>
+    {
+        { "inv", "inv" },
+        { "sqrt", "sqrt" },
+        { "^2", "^2" }
+    };
 
         for (int i = 0; i < expr.Length; i++)
         {
@@ -37,6 +44,26 @@ public class MainCalculator : AdvancedCalculator
             if (c == '-' && (i == 0 || expr[i - 1] == '('))
             {
                 number = "-";
+            }
+            
+            if (i + 2 < expr.Length && expr.Substring(i, 3) == "inv")
+            {
+                tokens.Add("inv");
+                i += 2; 
+                continue;
+            }
+
+            if (i + 3 < expr.Length && expr.Substring(i, 4) == "sqrt")
+            {
+                tokens.Add("sqrt");
+                i += 3; 
+                continue;
+            }
+            if (i + 1 < expr.Length && expr.Substring(i, 2) == "^2")
+            {
+                tokens.Add("^2");
+                i += 1; 
+                continue;
             }
 
             else if (!char.IsWhiteSpace(c))
