@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
+
 
 public class CalculatorViewModel : INotifyPropertyChanged
 {
@@ -30,17 +32,35 @@ public class CalculatorViewModel : INotifyPropertyChanged
         }
     }
 
+    private bool isHistoryVisible = false;
+    public bool IsHistoryVisible
+    {
+        get => isHistoryVisible;
+        set
+        {
+            isHistoryVisible = value;
+            OnPropertyChanged(nameof(IsHistoryVisible));
+            OnPropertyChanged(nameof(HistoryVisibility));
+        }
+    }
+
+    public Visibility HistoryVisibility => IsHistoryVisible ? Visibility.Visible : Visibility.Collapsed;
+
     public ICommand AppendInputCommand { get; }
+    public ICommand AppendAndCalculateCommand { get; }
     public ICommand CalculateCommand { get; }
     public ICommand ClearAllCommand { get; }
     public ICommand ClearEntryCommand { get; }
+    public ICommand ToggleHistoryCommand { get; }
 
     public CalculatorViewModel()
     {
         AppendInputCommand = new RelayCommand(AppendInput);
+        AppendAndCalculateCommand = new RelayCommand(AppendAndCalculate);
         CalculateCommand = new RelayCommand(_ => Calculate());
         ClearAllCommand = new RelayCommand(_ => ClearAll());
         ClearEntryCommand = new RelayCommand(_ => ClearEntry());
+        ToggleHistoryCommand = new RelayCommand(_ => IsHistoryVisible = !IsHistoryVisible);
     }
 
     private void AppendInput(object? param)
@@ -49,6 +69,15 @@ public class CalculatorViewModel : INotifyPropertyChanged
         {
             CurrentExpression += param.ToString();
         }
+    }
+
+    private void AppendAndCalculate(object? param)
+    {
+        if (param is not null)
+        {
+            CurrentExpression += param.ToString(); 
+        }
+        Calculate(); 
     }
 
     private void Calculate()
@@ -88,3 +117,4 @@ public class CalculatorViewModel : INotifyPropertyChanged
         }
     }
 }
+

@@ -8,6 +8,7 @@
       Title="MainWindow" Background="White">
 
     <Page.Resources>
+        <!-- 버튼 스타일 -->
         <Style x:Key="RoundedButtonStyle" TargetType="Button">
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="Template">
@@ -16,6 +17,7 @@
                         <Border Background="{TemplateBinding Background}" 
                                 CornerRadius="3"
                                 BorderBrush="Black" BorderThickness="0.7">
+                            
                             <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </Border>
                     </ControlTemplate>
@@ -26,20 +28,56 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" MinHeight="120"/>
+            <RowDefinition Height="Auto"/>
+            <!-- 상단 버튼 -->
+            <RowDefinition Height="Auto"/>
+            <!-- Display -->
             <RowDefinition Height="*"/>
+            <!-- 숫자/연산 버튼 영역 -->
         </Grid.RowDefinitions>
 
-        <!-- Display 영역 -->
-        <StackPanel Grid.Row="0" Margin="5">
-            <TextBox FontSize="18" Height="100" IsReadOnly="True" TextAlignment="Right"
-                     Text="{Binding CurrentExpression, Mode=OneWay}" BorderThickness="0"/>
-            <TextBox FontSize="24" Height="50" IsReadOnly="True" TextAlignment="Right"
-                     Text="{Binding CurrentResult, Mode=OneWay}" BorderThickness="0"/>
-        </StackPanel>
+        <!-- 상단 버튼 -->
+        <Grid Grid.Row="0" Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
 
-        <!-- 버튼 영역 -->
-        <Grid Grid.Row="1" Margin="3">
+            <!-- 왼쪽 메뉴 버튼 -->
+            <Button  Grid.Column="0" Width="30" Height="30" Margin="2"
+                    HorizontalAlignment="Left"
+                    Content="☰" Style="{StaticResource RoundedButtonStyle}"/>
+
+            <!-- 오른쪽 기록 버튼 -->
+            <Button Grid.Column="1" Width="30" Height="30" Margin="2"
+                    HorizontalAlignment="Right"
+                    Command="{Binding ToggleHistoryCommand}" 
+                    Content="⏳" Style="{StaticResource RoundedButtonStyle}" Background="#B8D0FA"/>
+        </Grid>
+
+
+        <!-- Display 영역 -->
+        <Border Grid.Row="1" CornerRadius="10" Background="#F1F3F5" Padding="5" Margin="5">
+            <StackPanel Margin="0,10,0,0">
+                <TextBox FontSize="18" Height="100" IsReadOnly="True" TextAlignment="Right"
+                         Text="{Binding CurrentExpression, Mode=OneWay}" BorderThickness="0" Background="#F1F3F5" Foreground="Gray" TextWrapping="Wrap"/>
+                <TextBox FontSize="24" Height="50" IsReadOnly="True" TextAlignment="Right"
+                         Text="{Binding CurrentResult, Mode=OneWay}" BorderThickness="0" Background="#F1F3F5" Foreground="Black"/>
+            </StackPanel>
+        </Border>
+
+        <!-- 계산 기록창 -->
+        <Border Grid.Row="1" Grid.RowSpan="2" Margin="4,5,4,5" Background="#B8D0FA" CornerRadius="10" Padding="5"
+                Visibility="{Binding HistoryVisibility}" Panel.ZIndex="10">
+            <StackPanel>
+                <TextBlock Text="계산 기록" FontWeight="Bold" Margin="5"/>
+                <ListBox ItemsSource="{Binding CalculationHistory}" Margin="5"/>
+            </StackPanel>
+        </Border>
+    <Grid/>
+
+    <!-- 버튼 영역 -->
+        <Grid Grid.Row="2" Margin="3">
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
@@ -55,41 +93,41 @@
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
-            <!-- Row 0: 괄호 및 초기화 -->
+            <!-- 1행 -->
             <Button Content="(" Command="{Binding AppendInputCommand}" CommandParameter="(" Grid.Row="0" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
             <Button Content=")" Command="{Binding AppendInputCommand}" CommandParameter=")" Grid.Row="0" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
             <Button Content="C" Command="{Binding ClearAllCommand}" Grid.Row="0" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
             <Button Content="CE" Command="{Binding ClearEntryCommand}" Grid.Row="0" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
 
-            <!-- Row 1: 고급 연산 -->
+            <!-- 2행 -->
             <Button Content="1/x" Grid.Row="1" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
             <Button Content="x²" Grid.Row="1" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
             <Button Content="√x" Grid.Row="1" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
             <Button Content="+" Command="{Binding AppendInputCommand}" CommandParameter="+" Grid.Row="1" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
 
-            <!-- Row 2 -->
+            <!-- 3행 -->
             <Button Content="7" Command="{Binding AppendInputCommand}" CommandParameter="7" Grid.Row="2" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
             <Button Content="8" Command="{Binding AppendInputCommand}" CommandParameter="8" Grid.Row="2" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
             <Button Content="9" Command="{Binding AppendInputCommand}" CommandParameter="9" Grid.Row="2" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
             <Button Content="-" Command="{Binding AppendInputCommand}" CommandParameter="-" Grid.Row="2" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
 
-            <!-- Row 3 -->
+            <!-- 4행 -->
             <Button Content="4" Command="{Binding AppendInputCommand}" CommandParameter="4" Grid.Row="3" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
             <Button Content="5" Command="{Binding AppendInputCommand}" CommandParameter="5" Grid.Row="3" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
             <Button Content="6" Command="{Binding AppendInputCommand}" CommandParameter="6" Grid.Row="3" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
             <Button Content="x" Command="{Binding AppendInputCommand}" CommandParameter="*" Grid.Row="3" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
 
-            <!-- Row 4 -->
+            <!-- 5행 -->
             <Button Content="1" Command="{Binding AppendInputCommand}" CommandParameter="1" Grid.Row="4" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
             <Button Content="2" Command="{Binding AppendInputCommand}" CommandParameter="2" Grid.Row="4" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
             <Button Content="3" Command="{Binding AppendInputCommand}" CommandParameter="3" Grid.Row="4" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
             <Button Content="÷" Command="{Binding AppendInputCommand}" CommandParameter="/" Grid.Row="4" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5"/>
 
-            <!-- Row 5 -->
-            <Button Content="+/-" Grid.Row="5" Grid.Column="0" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
-            <Button Content="0" Command="{Binding AppendInputCommand}" CommandParameter="0" Grid.Row="5" Grid.Column="1" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
-            <Button Content="." Command="{Binding AppendInputCommand}" CommandParameter="." Grid.Row="5" Grid.Column="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
-            <Button Content="=" Command="{Binding CalculateCommand}" Grid.Row="5" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="RoyalBlue"/>
+            <!-- 6행 -->
+            <Button Content="0" Command="{Binding AppendInputCommand}" CommandParameter="0" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
+            <Button Content="." Command="{Binding AppendInputCommand}" CommandParameter="." Grid.Row="5" Grid.Column="2"  Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="White"/>
+            <Button Content="=" Command="{Binding AppendAndCalculateCommand}" CommandParameter="=" Grid.Row="5" Grid.Column="3" Style="{StaticResource RoundedButtonStyle}" Margin="1.5" Background="#B8D0FA"/>
         </Grid>
+
     </Grid>
 </Page>
